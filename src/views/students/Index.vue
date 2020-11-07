@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="grey lighten-5">
     <v-card-title>
       <v-row justify="space-between">
         <v-col cols="auto">
@@ -21,6 +21,7 @@
         </v-col>
       </v-row>
     </v-card-title>
+    <v-divider></v-divider>
     <v-card-text>
       <v-row>
         <v-col cols="12" md="6">
@@ -30,6 +31,7 @@
             label="Nome do aluno"
             prepend-inner-icon="fas fa-search"
             solo
+            flat
             clearable
           >
           </v-text-field>
@@ -39,18 +41,20 @@
           <v-select
             id="degree-filter"
             solo
+            flat
+            v-model="degreeFilter"
             :items="[
               {
-                text: 'Todos',
+                text: 'Todas',
                 value: 'all'
               },
               {
                 text: 'Ensino Fundamental',
-                value: '1'
+                value: 1
               },
               {
                 text: 'Ensino superior',
-                value: '2'
+                value: 2
               }
             ]"
           >
@@ -61,28 +65,39 @@
           <v-select
             id="class-filter"
             solo
+            flat
+            v-model="classFilter"
             :items="[
               {
-                text: 'Todos',
+                text: 'Todas',
                 value: 'all'
               },
               {
                 text: 'A',
-                value: '1'
+                value: 1
               },
               {
                 text: 'B',
-                value: '2'
+                value: 2
               }
             ]"
           >
           </v-select>
         </v-col>
       </v-row>
-      <v-divider></v-divider>
       <v-row>
         <v-col cols="12">
-          <v-data-table :headers="headers" :items="items"></v-data-table>
+          <v-data-table :headers="headers" :items="items">
+            <template v-slot:item.action="{ item }">
+              <v-btn
+                text
+                color="primary"
+                :to="{ name: 'StudentUpdate', params: { id: item.id } }"
+              >
+                Editar
+              </v-btn>
+            </template>
+          </v-data-table>
         </v-col>
       </v-row>
     </v-card-text>
@@ -148,11 +163,14 @@ const headers = [
     text: 'Turma',
     sortable: true,
     value: 'classId'
-  }
+  },
+  { text: 'Ação', sortable: false, value: 'action' }
 ]
 
 export default {
   data: () => ({
+    classFilter: 'all',
+    degreeFilter: 'all',
     headers,
     items
   })
