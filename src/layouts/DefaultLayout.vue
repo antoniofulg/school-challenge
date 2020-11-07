@@ -25,7 +25,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container class="blue-grey lighten-5" fluid>
+      <v-container class="main-container blue-grey lighten-5" fluid>
         <slot></slot>
       </v-container>
     </v-main>
@@ -56,3 +56,8 @@ export default {
   })
 }
 </script>
+
+<style lang="sass">
+.main-container
+  min-height: calc(100vh - 64px)
+</style>
