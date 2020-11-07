@@ -1,6 +1,8 @@
 <template>
   <layout>
-    <router-view />
+    <transition name="fade" mode="out-in">
+      <router-view />
+    </transition>
   </layout>
 </template>
 
@@ -13,3 +15,12 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.fade-enter-active,
+.fade-leave-active
+  transition: opacity .2s linear
+.fade-enter,
+.fade-leave-to
+  opacity: 0
+</style>
