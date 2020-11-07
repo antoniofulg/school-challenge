@@ -21,11 +21,11 @@
     </v-navigation-drawer>
 
     <v-app-bar color="accent" clipped-left app>
-      <v-toolbar-title class="white--text">Evolucional</v-toolbar-title>
+      <v-toolbar-title class="white--text">School Challenge</v-toolbar-title>
     </v-app-bar>
 
     <v-main>
-      <v-container class="main-container blue-grey lighten-5" fluid>
+      <v-container class="main-container grey lighten-2" fluid>
         <slot></slot>
       </v-container>
     </v-main>
