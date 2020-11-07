@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Dashboard from '@/views/dashboard/Index.vue'
+import StudentsIndex from '@/views/students/Index.vue'
+import StudentsUpdate from '@/views/students/Update.vue'
+import TeachersIndex from '@/views/teachers/Index.vue'
 import DefaultLayout from '@/views/DefaultLayout.vue'
 
 Vue.use(VueRouter)
@@ -19,12 +22,18 @@ const routes = [
       {
         path: 'alunos',
         name: 'Students',
-        component: Dashboard
+        component: StudentsIndex
+      },
+      {
+        path: 'alunos/editar/:id',
+        name: 'StudentUpdate',
+        component: StudentsUpdate,
+        props: true
       },
       {
         path: 'professores',
         name: 'Teachers',
-        component: Dashboard
+        component: TeachersIndex
       }
     ]
   }
