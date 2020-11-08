@@ -1,5 +1,5 @@
 <template>
-  <v-card class="grey lighten-5">
+  <v-card :loading="loading" class="grey lighten-5">
     <v-card-title>
       <v-row justify="space-between">
         <v-col cols="auto">
@@ -17,30 +17,32 @@
       <v-form>
         <v-row>
           <v-col cols="6" md="2">
-            <label for="student-id">Matrícula</label>
-            <v-text-field id="student-id" disabled solo flat clearable>
+            <label for="student-id">Registro do Aluno</label>
+            <v-text-field
+              id="student-id"
+              v-model="item.ra"
+              disabled
+              solo
+              flat
+              clearable
+            >
             </v-text-field>
           </v-col>
           <v-col cols="12" md="6">
             <label for="student-name">Nome do aluno</label>
-            <v-text-field id="student-name" solo flat clearable> </v-text-field>
+            <v-text-field id="student-name" v-model="item.name" solo flat>
+            </v-text-field>
           </v-col>
           <v-col cols="6" md="3">
             <label for="student-degree">Série</label>
             <v-select
               id="student-degree"
+              v-model="item.degreeId"
               solo
               flat
-              :items="[
-                {
-                  text: 'Ensino Fundamental',
-                  value: 1
-                },
-                {
-                  text: 'Ensino superior',
-                  value: 2
-                }
-              ]"
+              item-value="id"
+              item-text="name"
+              :items="degrees"
             >
             </v-select>
           </v-col>
@@ -48,18 +50,12 @@
             <label for="student-class">Turma</label>
             <v-select
               id="student-class"
+              v-model="item.classId"
               solo
               flat
-              :items="[
-                {
-                  text: 'A',
-                  value: 1
-                },
-                {
-                  text: 'B',
-                  value: 2
-                }
-              ]"
+              item-value="id"
+              item-text="name"
+              :items="classes"
             >
             </v-select>
           </v-col>
@@ -71,7 +67,7 @@
             </v-btn>
           </v-col>
           <v-col cols="auto">
-            <v-btn color="success">
+            <v-btn @click="submitItem" :loading="loading" color="success">
               Salvar
             </v-btn>
           </v-col>
@@ -82,7 +78,57 @@
 </template>
 
 <script>
+import StudentsService from '@/services/students'
+import ClassesService from '@/services/classes'
+import DegreesService from '@/services/degrees'
+
 export default {
-  data: () => ({})
+  name: 'StudentsUpdate',
+  props: ['id'],
+  data: () => ({
+    loading: false,
+    item: {},
+    classes: [],
+    degrees: [],
+  }),
+  async mounted() {
+    await this.setupComplementalData()
+    this.getItem()
+  },
+  methods: {
+    async getItem() {
+      try {
+        this.loading = true
+        const { data } = await StudentsService.show(this.id, true)
+        this.item = data.student
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+      }
+    },
+    async setupComplementalData() {
+      try {
+        this.loading = true
+        this.classes = (await ClassesService.index()).data.classes
+        this.degrees = (await DegreesService.index()).data.degrees
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+      }
+    },
+    async submitItem() {
+      try {
+        this.loading = true
+        const { data } = await StudentsService.update(this.item)
+        console.log(data)
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+      }
+    },
+  },
 }
 </script>
