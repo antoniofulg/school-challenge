@@ -29,6 +29,7 @@
           <v-text-field
             id="student-filter"
             label="Nome do aluno"
+            v-model="nameFilter"
             prepend-inner-icon="fas fa-search"
             solo
             flat
@@ -100,12 +101,24 @@ export default {
   data: () => ({
     loading: false,
     classes: [],
-    classFilter: 'all',
+    classFilter: '',
     degrees: [],
-    degreeFilter: 'all',
+    degreeFilter: '',
     headers,
     items: [],
+    nameFilter: '',
   }),
+  watch: {
+    classFilter() {
+      this.getItems()
+    },
+    degreeFilter() {
+      this.getItems()
+    },
+    nameFilter() {
+      this.getItems()
+    },
+  },
   async mounted() {
     await this.setupComplementalData()
     this.getItems()
@@ -114,7 +127,12 @@ export default {
     async getItems() {
       try {
         this.loading = true
-        const { data } = await StudentsService.index()
+        const params = {
+          name: this.nameFilter,
+          degreeId: this.degreeFilter,
+          classId: this.classFilter,
+        }
+        const { data } = await StudentsService.index(params)
         this.items = data.students
         this.loading = false
       } catch (error) {
@@ -126,11 +144,11 @@ export default {
       try {
         this.loading = true
         this.classes = [
-          { id: 'all', name: 'Todas' },
+          { id: '', name: 'Todas' },
           ...(await ClassesService.index()).data.classes,
         ]
         this.degrees = [
-          { id: 'all', name: 'Todas' },
+          { id: '', name: 'Todas' },
           ...(await DegreesService.index()).data.degrees,
         ]
         this.loading = false
