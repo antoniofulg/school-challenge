@@ -17,32 +17,32 @@ const routes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        component: Dashboard
+        component: Dashboard,
       },
       {
         path: 'alunos',
         name: 'Students',
-        component: StudentsIndex
+        component: StudentsIndex,
       },
       {
         path: 'alunos/editar/:id',
         name: 'StudentUpdate',
         component: StudentsUpdate,
-        props: true
+        props: true,
       },
       {
         path: 'professores',
         name: 'Teachers',
-        component: TeachersIndex
-      }
-    ]
-  }
+        component: TeachersIndex,
+      },
+    ],
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 export default router

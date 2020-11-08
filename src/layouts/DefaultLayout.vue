@@ -40,20 +40,20 @@ export default {
       {
         route: 'Dashboard',
         name: 'Dashboard',
-        icon: 'fas fa-chart-line'
+        icon: 'fas fa-chart-line',
       },
       {
         route: 'Students',
         name: 'Alunos',
-        icon: 'fas fa-user-graduate'
+        icon: 'fas fa-user-graduate',
       },
       {
         route: 'Teachers',
         name: 'Professores',
-        icon: 'fas fa-chalkboard-teacher'
-      }
-    ]
-  })
+        icon: 'fas fa-chalkboard-teacher',
+      },
+    ],
+  }),
 }
 </script>
 
