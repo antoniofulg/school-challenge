@@ -43,20 +43,9 @@
             solo
             flat
             v-model="degreeFilter"
-            :items="[
-              {
-                text: 'Todas',
-                value: 'all'
-              },
-              {
-                text: 'Ensino Fundamental',
-                value: 1
-              },
-              {
-                text: 'Ensino superior',
-                value: 2
-              }
-            ]"
+            item-value="id"
+            item-text="name"
+            :items="degrees"
           >
           </v-select>
         </v-col>
@@ -67,27 +56,16 @@
             solo
             flat
             v-model="classFilter"
-            :items="[
-              {
-                text: 'Todas',
-                value: 'all'
-              },
-              {
-                text: 'A',
-                value: 1
-              },
-              {
-                text: 'B',
-                value: 2
-              }
-            ]"
+            item-value="id"
+            item-text="name"
+            :items="classes"
           >
           </v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12">
-          <v-data-table :headers="headers" :items="items">
+          <v-data-table :loading="loading" :headers="headers" :items="items">
             <template v-slot:item.action="{ item }">
               <v-btn
                 text
@@ -105,74 +83,62 @@
 </template>
 
 <script>
-const items = [
-  {
-    id: 1,
-    ra: 12346,
-    name: 'Nome do aluno 1',
-    degreeId: 1,
-    classId: 1
-  },
-  {
-    id: 2,
-    ra: 456798,
-    name: 'Nome do aluno 2',
-    degreeId: 2,
-    classId: 1
-  },
-  {
-    id: 3,
-    ra: 752156,
-    name: 'Nome do aluno 3',
-    degreeId: 3,
-    classId: 2
-  },
-  {
-    id: 4,
-    ra: 852348,
-    name: 'Nome do aluno 4',
-    degreeId: 4,
-    classId: 2
-  },
-  {
-    id: 5,
-    ra: 454643,
-    name: 'Nome do aluno 5',
-    degreeId: 6,
-    classId: 2
-  }
+const headers = [
+  { text: 'Matrícula', sortable: true, value: 'ra' },
+  { text: 'Nome', sortable: true, value: 'name' },
+  { text: 'Série', sortable: true, value: 'degree.name' },
+  { text: 'Turma', sortable: true, value: 'class.name' },
+  { text: 'Ação', sortable: false, value: 'action' },
 ]
 
-const headers = [
-  {
-    text: 'Matrícula',
-    sortable: true,
-    value: 'ra'
-  },
-  {
-    text: 'Nome',
-    sortable: true,
-    value: 'name'
-  },
-  {
-    text: 'Série',
-    sortable: true,
-    value: 'degreeId'
-  },
-  {
-    text: 'Turma',
-    sortable: true,
-    value: 'classId'
-  },
-  { text: 'Ação', sortable: false, value: 'action' }
-]
+import StudentsService from '@/services/students'
+import ClassesService from '@/services/classes'
+import DegreesService from '@/services/degrees'
 
 export default {
+  name: 'StudentsIndex',
   data: () => ({
+    loading: false,
+    classes: [],
     classFilter: 'all',
+    degrees: [],
     degreeFilter: 'all',
     headers,
-    items
-  })
+    items: [],
+  }),
+  async mounted() {
+    await this.setupComplementalData()
+    this.getItems()
+  },
+  methods: {
+    async getItems() {
+      try {
+        this.loading = true
+        const { data } = await StudentsService.index()
+        this.items = data.students
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+      }
+    },
+    async setupComplementalData() {
+      try {
+        this.loading = true
+        this.classes = [
+          { id: 'all', name: 'Todas' },
+          ...(await ClassesService.index()).data.classes,
+        ]
+        this.degrees = [
+          { id: 'all', name: 'Todas' },
+          ...(await DegreesService.index()).data.degrees,
+        ]
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+      }
+    },
+  },
 }
 </script>
