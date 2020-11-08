@@ -38,6 +38,7 @@
             <v-select
               id="student-degree"
               v-model="item.degreeId"
+              disabled
               solo
               flat
               item-value="id"
