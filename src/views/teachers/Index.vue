@@ -65,13 +65,14 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" md="6" lg="3">
-          <profile-card
-            v-for="profile in profiles"
-            :key="profile.id"
-            :profile="profile"
-          >
-          </profile-card>
+        <v-col
+          v-for="teacher in teachers"
+          :key="teacher.id"
+          cols="12"
+          md="6"
+          lg="3"
+        >
+          <teacher-card :teacher="teacher"> </teacher-card>
         </v-col>
       </v-row>
     </v-card-text>
@@ -87,14 +88,14 @@ const headers = [
   { text: 'Ação', sortable: false, value: 'action' },
 ]
 
-import ProfilesService from '@/services/profiles'
+import TeachersService from '@/services/teachers'
 import ClassesService from '@/services/classes'
 import DegreesService from '@/services/degrees'
-import ProfileCard from '@/components/ProfileCard'
+import TeacherCard from '@/components/TeacherCard'
 
 export default {
   name: 'TeachersIndex',
-  components: { ProfileCard },
+  components: { TeacherCard },
   data: () => ({
     loading: false,
     classes: [],
@@ -121,7 +122,7 @@ export default {
     this.getItems()
   },
   computed: {
-    profiles() {
+    teachers() {
       return this.items
     },
   },
@@ -134,8 +135,8 @@ export default {
           degreeId: this.degreeFilter,
           classId: this.classFilter,
         }
-        const { data } = await ProfilesService.index(params)
-        this.items = data.profiles
+        const { data } = await TeachersService.index(params)
+        this.items = data.teachers
         this.loading = false
       } catch (error) {
         this.loading = false
