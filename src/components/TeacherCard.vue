@@ -61,7 +61,7 @@
     </v-card-text>
     <v-card-text v-else>
       <v-divider></v-divider>
-      <v-row :justify="center" class="align-center">
+      <v-row justify="center" class="align-center">
         <v-col cols="auto">
           <span class="text-subtitle-2 font-weight-bold">
             Perfil ainda não cadastrado!
