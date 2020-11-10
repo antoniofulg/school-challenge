@@ -5,14 +5,14 @@
         <v-col cols="auto">
           Listagem de alunos
         </v-col>
-        <v-col cols="auto">
-          <v-row>
+        <v-col cols="12" md="auto">
+          <v-row justify="space-between">
             <v-col class="py-0">
               <v-btn color="success">
                 Gerar alunos
               </v-btn>
             </v-col>
-            <v-col class="py-0">
+            <v-col class="text-right py-0">
               <v-btn :to="{ name: 'Dashboard' }" color="primary">
                 Ver gráficos
               </v-btn>
@@ -37,7 +37,7 @@
           >
           </v-text-field>
         </v-col>
-        <v-col cols="6" md="3">
+        <v-col cols="12" md="3">
           <label for="degree-filter">Série</label>
           <v-select
             id="degree-filter"
@@ -50,7 +50,7 @@
           >
           </v-select>
         </v-col>
-        <v-col cols="6" md="3">
+        <v-col cols="12" md="3">
           <label for="class-filter">Turma</label>
           <v-select
             id="class-filter"

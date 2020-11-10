@@ -70,8 +70,9 @@
           :key="teacher.id"
           class="align-stretch"
           cols="12"
-          md="6"
-          lg="3"
+          sm="6"
+          lg="4"
+          xl="3"
         >
           <teacher-card :teacher="teacher"> </teacher-card>
         </v-col>

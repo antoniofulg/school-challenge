@@ -5,18 +5,13 @@
         <v-col cols="auto">
           Editar aluno
         </v-col>
-        <v-col cols="auto">
-          <v-btn color="primary">
-            Ver gráficos
-          </v-btn>
-        </v-col>
       </v-row>
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
       <v-form>
         <v-row>
-          <v-col cols="6" md="2">
+          <v-col cols="12" md="2">
             <label for="student-id">Registro do Aluno</label>
             <v-text-field
               id="student-id"
@@ -33,7 +28,7 @@
             <v-text-field id="student-name" v-model="item.name" solo flat>
             </v-text-field>
           </v-col>
-          <v-col cols="6" md="3">
+          <v-col cols="12" md="3">
             <label for="student-degree">Série</label>
             <v-select
               id="student-degree"
@@ -47,7 +42,7 @@
             >
             </v-select>
           </v-col>
-          <v-col cols="6" md="1">
+          <v-col cols="12" md="1">
             <label for="student-class">Turma</label>
             <v-select
               id="student-class"
