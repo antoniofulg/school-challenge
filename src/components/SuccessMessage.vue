@@ -10,13 +10,15 @@
         <v-card-text>
           <v-row justify="center">
             <v-col cols="auto">
-              <v-icon x-large color="success">fas fa-check-circle</v-icon>
+              <v-icon class="icon-extra-size" color="success"
+                >fas fa-check-circle</v-icon
+              >
             </v-col>
           </v-row>
           <v-row justify="center">
             <v-col class="pb-0" cols="12">
-              <v-btn :to="{ name: route }" block width="" color="primary"
-                >Voltar</v-btn
+              <v-btn @click="$emit('confirm')" block color="primary"
+                >Voltar para listagem</v-btn
               >
             </v-col>
           </v-row>
@@ -38,10 +40,11 @@ export default {
       type: String,
       required: true,
     },
-    route: {
-      type: String,
-      required: true,
-    },
   },
 }
 </script>
+
+<style lang="sass">
+i.v-icon.icon-extra-size
+  font-size: 100px
+</style>
