@@ -13,7 +13,7 @@
               </v-btn>
             </v-col>
             <v-col class="py-0">
-              <v-btn color="primary">
+              <v-btn :to="{ name: 'Dashboard' }" color="primary">
                 Ver gráficos
               </v-btn>
             </v-col>
@@ -143,7 +143,7 @@ export default {
     },
     getQueryParams() {
       const { degreeId } = this.$route.query
-      this.degreeFilter = degreeId
+      if (degreeId) this.degreeFilter = degreeId
     },
     async setupComplementalData() {
       try {

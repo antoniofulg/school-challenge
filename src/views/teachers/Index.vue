@@ -13,7 +13,7 @@
               </v-btn>
             </v-col>
             <v-col class="py-0">
-              <v-btn color="primary">
+              <v-btn :to="{ name: 'Dashboard' }" color="primary">
                 Ver gráficos
               </v-btn>
             </v-col>
