@@ -121,6 +121,7 @@ export default {
   },
   async mounted() {
     await this.setupComplementalData()
+    this.getQueryParams()
     this.getItems()
   },
   methods: {
@@ -139,6 +140,10 @@ export default {
         this.loading = false
         console.log(error)
       }
+    },
+    getQueryParams() {
+      const { degreeId } = this.$route.query
+      this.degreeFilter = degreeId
     },
     async setupComplementalData() {
       try {

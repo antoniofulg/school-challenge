@@ -42,14 +42,20 @@
           v-for="degree in teacher.profile.degrees"
           :key="`degree-${degree.id}`"
         >
-          <v-chip color="primary">
+          <v-btn
+            :to="{ name: 'Students', query: { degreeId: degree.degree.id } }"
+            class="text-normal"
+            color="primary"
+            rounded
+            depressed
+          >
             <span class="font-weight-black mr-2">
               {{ degree.degree.name }}:
             </span>
             <span class="font-weight-bold">
               {{ degree.classes.map(classItem => classItem.name).join(', ') }}
             </span>
-          </v-chip>
+          </v-btn>
         </v-col>
       </v-row>
     </v-card-text>
@@ -82,3 +88,8 @@ export default {
   },
 }
 </script>
+
+<style lang="sass">
+.text-normal
+  text-transform: none !important
+</style>
