@@ -1,6 +1,6 @@
 <template>
   <v-app id="sandbox">
-    <v-navigation-drawer v-model="drawer" color="accent" permanent clipped app>
+    <v-navigation-drawer v-model="drawer" color="accent" clipped app>
       <v-list dense nav>
         <v-list-item
           v-for="item in menuItems"
@@ -21,6 +21,10 @@
     </v-navigation-drawer>
 
     <v-app-bar color="accent" clipped-left app>
+      <v-app-bar-nav-icon
+        dark
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title class="white--text">School Challenge</v-toolbar-title>
     </v-app-bar>
 
