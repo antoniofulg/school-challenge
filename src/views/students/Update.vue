@@ -75,6 +75,7 @@
         </v-row>
       </v-form>
     </v-card-text>
+    <success-message :dialog="dialog" :title="message" route="Students" />
   </v-card>
 </template>
 
@@ -82,12 +83,18 @@
 import StudentsService from '@/services/students'
 import ClassesService from '@/services/classes'
 import DegreesService from '@/services/degrees'
+import SuccessMessage from '@/components/SuccessMessage'
 
 export default {
   name: 'StudentsUpdate',
   props: ['id'],
+  components: {
+    SuccessMessage,
+  },
   data: () => ({
     loading: false,
+    dialog: false,
+    message: '',
     item: {},
     classes: [],
     degrees: [],
@@ -123,8 +130,9 @@ export default {
       try {
         this.loading = true
         const { data } = await StudentsService.update(this.item)
-        console.log(data)
+        this.message = data.message
         this.loading = false
+        this.dialog = true
       } catch (error) {
         this.loading = false
         console.log(error)
