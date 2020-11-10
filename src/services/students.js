@@ -11,6 +11,9 @@ export default {
       },
     })
   },
+  generate() {
+    return api().post('/students/generate')
+  },
   update(params) {
     return api().put(`/students/${params.id}`, params)
   },
