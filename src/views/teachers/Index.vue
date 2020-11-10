@@ -68,6 +68,7 @@
         <v-col
           v-for="teacher in teachers"
           :key="teacher.id"
+          class="align-stretch"
           cols="12"
           md="6"
           lg="3"
