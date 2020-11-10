@@ -70,7 +70,11 @@
         </v-row>
       </v-form>
     </v-card-text>
-    <success-message :dialog="dialog" :title="message" route="Students" />
+    <success-message
+      :dialog="dialog"
+      :title="message"
+      @confirm="$router.push({ name: 'Students' })"
+    />
   </v-card>
 </template>
 

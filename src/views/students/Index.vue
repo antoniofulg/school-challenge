@@ -8,7 +8,7 @@
         <v-col cols="12" md="auto">
           <v-row justify="space-between">
             <v-col class="py-0">
-              <v-btn color="success">
+              <v-btn @click="dialog = true" color="success">
                 Gerar alunos
               </v-btn>
             </v-col>
@@ -80,6 +80,21 @@
         </v-col>
       </v-row>
     </v-card-text>
+    <confirm-message
+      :dialog="dialog"
+      title="Deseja gerar 300 novos estudantes?"
+      message="Serão gerados 300 estudantes com dados aleatórios"
+      @confirm="generateStudents"
+      @cancel="dialog = false"
+    />
+    <success-message
+      :dialog="dialogMessage"
+      :title="message"
+      @confirm="
+        dialogMessage = false
+        getItems()
+      "
+    />
   </v-card>
 </template>
 
@@ -95,11 +110,20 @@ const headers = [
 import StudentsService from '@/services/students'
 import ClassesService from '@/services/classes'
 import DegreesService from '@/services/degrees'
+import ConfirmMessage from '@/components/ConfirmMessage'
+import SuccessMessage from '@/components/SuccessMessage'
 
 export default {
   name: 'StudentsIndex',
+  components: {
+    ConfirmMessage,
+    SuccessMessage,
+  },
   data: () => ({
     loading: false,
+    dialog: false,
+    dialogMessage: false,
+    message: '',
     classes: [],
     classFilter: '',
     degrees: [],
@@ -125,6 +149,18 @@ export default {
     this.getItems()
   },
   methods: {
+    async generateStudents() {
+      try {
+        this.loading = true
+        const { data } = await StudentsService.generate()
+        this.message = data.message
+        this.dialog = false
+        this.dialogMessage = true
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+      }
+    },
     async getItems() {
       try {
         this.loading = true
