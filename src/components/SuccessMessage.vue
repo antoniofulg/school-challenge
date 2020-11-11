@@ -3,8 +3,8 @@
     <v-dialog v-model="dialog" width="320" persistent>
       <v-card>
         <v-card-title>
-          <v-row justify="center">
-            {{ title }}
+          <v-row justify="center" class="text-center">
+            <span class="text-subtitle-1">{{ title }}</span>
           </v-row>
         </v-card-title>
         <v-card-text>
