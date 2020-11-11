@@ -9,11 +9,17 @@
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
-      <v-form>
+      <v-form ref="form" v-model="form" lazy-validation>
         <v-row>
           <v-col cols="12" md="8">
             <label for="teacher-name">Nome do professor</label>
-            <v-text-field id="teacher-name" v-model="item.name" solo flat>
+            <v-text-field
+              id="teacher-name"
+              v-model="item.name"
+              :rules="rules"
+              solo
+              flat
+            >
             </v-text-field>
           </v-col>
           <v-col cols="12" md="4">
@@ -22,6 +28,7 @@
               id="teacher-matter"
               placeholder="Selecione uma matéria"
               v-model="profile.matter.id"
+              :rules="rules"
               solo
               flat
               item-value="id"
@@ -43,6 +50,7 @@
             <v-select
               id="teacher-degree"
               v-model="degree.degree.id"
+              :rules="rules"
               placeholder="Selecione uma série"
               solo
               flat
@@ -57,6 +65,7 @@
             <v-select
               id="teacher-class"
               v-model="degree.classes"
+              :rules="[v => (!!v && v.length > 0) || 'Campo requerido']"
               placeholder="Selecione uma turma"
               solo
               flat
@@ -125,6 +134,7 @@ export default {
     SuccessMessage,
   },
   data: () => ({
+    form: false,
     loading: false,
     dialog: false,
     message: '',
@@ -141,6 +151,7 @@ export default {
     classes: [],
     degrees: [],
     matters: [],
+    rules: [v => !!v || 'Campo requirido'],
   }),
   async mounted() {
     await this.setupComplementalData()
@@ -181,20 +192,22 @@ export default {
       }
     },
     async submitItem() {
-      try {
-        this.loading = true
-        const params = {
-          id: this.item.id,
-          name: this.item.name,
-          profile: this.profile,
+      if (this.$refs.form.validate()) {
+        try {
+          this.loading = true
+          const params = {
+            id: this.item.id,
+            name: this.item.name,
+            profile: this.profile,
+          }
+          const { data } = await TeachersService.update(params)
+          this.message = data.message
+          this.loading = false
+          this.dialog = true
+        } catch (error) {
+          this.loading = false
+          console.log(error)
         }
-        const { data } = await TeachersService.update(params)
-        this.message = data.message
-        this.loading = false
-        this.dialog = true
-      } catch (error) {
-        this.loading = false
-        console.log(error)
       }
     },
   },
