@@ -12,6 +12,7 @@ export default {
     })
   },
   update(params) {
+    console.log(params)
     return api().put(`/teachers/${params.id}`, params)
   },
 }

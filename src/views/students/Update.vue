@@ -57,13 +57,13 @@
           </v-col>
         </v-row>
         <v-row justify="space-between">
-          <v-col cols="auto">
-            <v-btn :to="{ name: 'Students' }" color="error">
+          <v-col cols="6" md="3" lg="2">
+            <v-btn :to="{ name: 'Students' }" block color="error">
               Cancelar
             </v-btn>
           </v-col>
-          <v-col cols="auto">
-            <v-btn @click="submitItem" :loading="loading" color="success">
+          <v-col cols="6" md="3" lg="2">
+            <v-btn @click="submitItem" block :loading="loading" color="success">
               Salvar
             </v-btn>
           </v-col>

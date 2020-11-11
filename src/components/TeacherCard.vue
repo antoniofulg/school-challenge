@@ -1,10 +1,30 @@
 <template>
   <v-card flat outlined height="100%">
     <v-card-title>
-      <v-icon color="primary" class="mr-4">fas fa-chalkboard-teacher</v-icon>
-      <span class="text-subtitle-1 font-weight-bold">
-        {{ teacher.name }}
-      </span>
+      <v-row justify="space-between">
+        <v-col class="py-0" cols="auto">
+          <v-icon color="primary" class="mr-4"
+            >fas fa-chalkboard-teacher</v-icon
+          >
+          <span class="text-subtitle-1 font-weight-bold">
+            {{ teacher.name }}
+          </span>
+        </v-col>
+        <v-col class="py-0" cols="auto">
+          <v-btn
+            :to="{
+              name: 'TeacherUpdate',
+              params: {
+                id: teacher.id,
+              },
+            }"
+            color="primary"
+            icon
+          >
+            <v-icon>fas fa-pen</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-card-title>
     <v-card-text v-if="teacher.profile">
       <v-divider></v-divider>

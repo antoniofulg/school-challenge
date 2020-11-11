@@ -8,8 +8,8 @@
         <v-col cols="auto">
           <v-row>
             <v-col class="py-0">
-              <v-btn color="success">
-                Criar relacionamentos
+              <v-btn disabled color="success">
+                Criar professor
               </v-btn>
             </v-col>
             <v-col class="py-0">
