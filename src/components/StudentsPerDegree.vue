@@ -5,6 +5,7 @@
         <v-col cols="auto">
           Alunos por série
         </v-col>
+        <v-col cols="auto"> Total de alunos: {{ total }} </v-col>
       </v-row>
     </v-card-title>
     <v-card-text>
@@ -22,7 +23,6 @@
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
-import DegreesService from '@/services/degrees'
 
 const colors = [
   '#269FFB',
@@ -42,12 +42,21 @@ const colors = [
 
 export default {
   name: 'StudentsPerDegree',
+  props: {
+    series: {
+      type: Array,
+      required: true,
+    },
+    total: {
+      type: Number,
+      required: true,
+    },
+  },
   components: {
     VueApexCharts,
   },
   data: () => ({
     loading: false,
-    series: [],
     colors,
   }),
   computed: {
@@ -62,21 +71,6 @@ export default {
             },
           },
         },
-      }
-    },
-  },
-  mounted() {
-    this.getItems()
-  },
-  methods: {
-    async getItems() {
-      try {
-        this.loading = true
-        this.series = (await DegreesService.students()).data.degrees
-        this.loading = false
-      } catch (error) {
-        this.loading = false
-        console.log(error)
       }
     },
   },
