@@ -9,7 +9,7 @@
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
-      <v-form>
+      <v-form ref="form" v-model="form" lazy-validation>
         <v-row>
           <v-col cols="12" md="2">
             <label for="student-id">Registro do Aluno</label>
@@ -25,7 +25,13 @@
           </v-col>
           <v-col cols="12" md="6">
             <label for="student-name">Nome do aluno</label>
-            <v-text-field id="student-name" v-model="item.name" solo flat>
+            <v-text-field
+              id="student-name"
+              v-model="item.name"
+              :rules="rules"
+              solo
+              flat
+            >
             </v-text-field>
           </v-col>
           <v-col cols="12" md="3">
@@ -47,6 +53,7 @@
             <v-select
               id="student-class"
               v-model="item.classId"
+              :rules="rules"
               solo
               flat
               item-value="id"
@@ -91,12 +98,14 @@ export default {
     SuccessMessage,
   },
   data: () => ({
+    form: false,
     loading: false,
     dialog: false,
     message: '',
     item: {},
     classes: [],
     degrees: [],
+    rules: [v => !!v || 'Campo requirido'],
   }),
   async mounted() {
     await this.setupComplementalData()
@@ -126,15 +135,17 @@ export default {
       }
     },
     async submitItem() {
-      try {
-        this.loading = true
-        const { data } = await StudentsService.update(this.item)
-        this.message = data.message
-        this.loading = false
-        this.dialog = true
-      } catch (error) {
-        this.loading = false
-        console.log(error)
+      if (this.$refs.form.validate()) {
+        try {
+          this.loading = true
+          const { data } = await StudentsService.update(this.item)
+          this.message = data.message
+          this.loading = false
+          this.dialog = true
+        } catch (error) {
+          this.loading = false
+          console.log(error)
+        }
       }
     },
   },

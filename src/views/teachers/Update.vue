@@ -151,7 +151,7 @@ export default {
     classes: [],
     degrees: [],
     matters: [],
-    rules: [v => !!v || 'Campo requirido'],
+    rules: [v => !!v || 'Campo requerido'],
   }),
   async mounted() {
     await this.setupComplementalData()
