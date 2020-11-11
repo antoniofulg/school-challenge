@@ -4,6 +4,9 @@ export default {
   index(params) {
     return api().get('/profiles', { params })
   },
+  create(params) {
+    return api().post('/profiles', params)
+  },
   show(id, simplified) {
     return api().get(`/profiles/${id}`, {
       params: {

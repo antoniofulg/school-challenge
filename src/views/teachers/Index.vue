@@ -8,7 +8,7 @@
         <v-col cols="auto">
           <v-row>
             <v-col class="py-0">
-              <v-btn disabled color="success">
+              <v-btn :to="{ name: 'TeacherCreate' }" color="success">
                 Criar professor
               </v-btn>
             </v-col>

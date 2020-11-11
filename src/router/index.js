@@ -4,6 +4,7 @@ import Dashboard from '@/views/dashboard/Index.vue'
 import StudentsIndex from '@/views/students/Index.vue'
 import StudentsUpdate from '@/views/students/Update.vue'
 import TeachersIndex from '@/views/teachers/Index.vue'
+import TeachersCreate from '@/views/teachers/Create.vue'
 import TeachersUpdate from '@/views/teachers/Update.vue'
 import DefaultLayout from '@/views/DefaultLayout.vue'
 
@@ -35,6 +36,11 @@ const routes = [
         path: 'professores',
         name: 'Teachers',
         component: TeachersIndex,
+      },
+      {
+        path: 'professores/criar',
+        name: 'TeacherCreate',
+        component: TeachersCreate,
       },
       {
         path: 'professores/editar/:id',
